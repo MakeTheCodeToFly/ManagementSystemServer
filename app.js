@@ -41,4 +41,8 @@ app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
 });
 
+// app.use(async ctx => {
+//   ctx.body = ctx.request.body
+// })
+
 module.exports = app
