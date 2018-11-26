@@ -22,10 +22,23 @@ class userModel {
             })
         })
     }
-    // 更改密码
-    static updataPassword(data) {
+    // 查询密码是否存在
+    static isPassword(data) {
         return new Promise((resolve, reject) => {
-            connect.query("update user set password = '" + data.password +  "'where userid = '" + data.userId + "'", (err, res) => {
+            connect.query("select * from user where password = '" + data.password + "'", (err, res) => {
+                if (res.length != 0) {
+                    resolve(res)
+                } else {
+                    reject(err)
+                }
+            })
+        })
+    }
+
+    // 更改密码
+    static updatePassword(data) {
+        return new Promise((resolve, reject) => {
+            connect.query("update user set password = '" + data.newPassword +  "'where username = '" + data.username + "'", (err, res) => {
                 if (res) {
                     resolve(res)
                 } else {
