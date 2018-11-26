@@ -87,10 +87,10 @@ class userController {
     }
 
     // 修改密码
-    // static async updatePassword(ctx) {
-    //     const data = ctx.request.body
-    //     const registUser = await userModel.updataPassword(data)
-    // }
+    static async updatePassword(ctx) {
+        const data = ctx.request.body
+        const registUser = await userModel.updataPassword(data)
+    }
 }
 
 module.exports = userController

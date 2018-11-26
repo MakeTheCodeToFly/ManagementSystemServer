@@ -25,7 +25,7 @@ class userModel {
     // 更改密码
     static updataPassword(data) {
         return new Promise((resolve, reject) => {
-            connect.query("update user set " + ",password = '" + data.password +  "'where userid = '" + data.userId + "'", (err, res) => {
+            connect.query("update user set password = '" + data.password +  "'where userid = '" + data.userId + "'", (err, res) => {
                 if (res) {
                     resolve(res)
                 } else {
