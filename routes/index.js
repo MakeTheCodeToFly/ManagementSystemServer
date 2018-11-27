@@ -22,7 +22,7 @@ connect.query(sqlQuery, function(err, res) {
 // 用户接口
 router.post('/api/user/login', userController.login) // 用户登录接口
 router.post('/api/user/register', userController.create) // 用户注册
-// router.post('/api/user/updatePossword', userController.updatePossword) // 用户注册
+router.post('/api/user/updatePassword', userController.updatePassword) // 用户注册
 
 
 // 查询成功后关闭mysql
