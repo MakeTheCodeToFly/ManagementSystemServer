@@ -1,11 +1,12 @@
-const connect = require('../config/db')
-const log = console.info
+const connect = require('./db')
+// const User = require('../schema/user')
+// User.sync({force: false})
 
 class userModel {
     // 用户登录
     static login() {
         return new Promise((res, rej) => {
-            connect.query("select username, password, account from user", (err, data) => {
+            connect.query("select username, password, account, department from user", (err, data) => {
                 res(data)
             })
         })
@@ -13,7 +14,7 @@ class userModel {
     // 注册用户
     static create(data) {
         return new Promise((resolve, reject) => {
-            connect.query("insert into user (account, username, password) values ('" + data.account + "'," + data.username + "," + data.password + ")", (err, res) => {
+            connect.query("insert into user (account, username, password, department) values ('" + data.account + "'," + data.username + "," + data.password + "," + data.department + ")", (err, res) => {
                 if (res) {
                     resolve(res)
                 } else {
@@ -45,8 +46,19 @@ class userModel {
                     reject(err)
                 }
             })
+        }) 
+    }
+
+    static loginData(data) {
+        let {username, password} = data 
+        return User.findOne({
+            where: {
+                username,
+                password
+            }
         })
     }
+
     // closeMysql(connect) {
     //     connect.end((err) => {
     //       if (err) {
