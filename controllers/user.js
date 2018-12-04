@@ -1,5 +1,7 @@
 const userModel = require('../modules/user')
 const jwt = require('jsonwebtoken')
+const util = require('util')
+const verify = util.promisify(jwt.verify)
 
 class userController {
     // 登录接口
@@ -27,13 +29,13 @@ class userController {
             if (a.length == 1) {
                 a.forEach((item, index, arr) => {
                     if (item.password == data.password) {
-                        // const token = jwt.sign(data, 'secret', {expiresIn: '1h'})
+                        const token = jwt.sign(data, 'secret', {expiresIn: '1h'})
                         ctx.body = ({
                             status: 1,
                             account: item.account,
                             username: item.username,
                             department: item.department,
-                            // token: token,
+                            token: token,
                             message: '登录成功！'
                         })
                     } else {
@@ -99,33 +101,49 @@ class userController {
 
     // 修改密码
     static async updatePassword(ctx) {
-        const data = ctx.request.body
-        const isPassword = await userModel.isPassword(data) // 查询密码是否存在
-        if (isPassword.length != 0) {
-            const updatePassword  = await userModel.updatePassword(data)
-            console.log(updatePassword.changedRows)
-            if (updatePassword.changedRows == 1) {
-                ctx.body = ({
-                    status: 1,
-                    message: '修改密码成功！'
-                })
-            } else if (updatePassword.changedRows == 0) {
-                ctx.body = ({
-                    status: 0,
-                    message: '原密码和修改密码相同！'
-                })
-            } else {
-                ctx.body = ({
-                    status: 0,
-                    message: '修改密码失败！'
-                })
-            }
-        } else {
-            ctx.body = ({
-                status: 0,
-                message: '原密码不正确！'
-            })
-        }
+        const token = ctx.request.body
+        console.log(token)
+        let payload = await verify(token.token, 'secret')
+        console.log(payload)
+
+        // if (token) {
+        //     // let payload
+        //     try {
+        //         const data = ctx.request.body
+        //         const isPassword = await userModel.isPassword(data) // 查询密码是否存在
+        //         if (isPassword.length != 0) {
+        //             const updatePassword  = await userModel.updatePassword(data)
+        //             console.log(updatePassword.changedRows)
+        //             if (updatePassword.changedRows == 1) {
+        //                 ctx.body = ({
+        //                     status: 1,
+        //                     message: '修改密码成功！'
+        //                 })
+        //             } else if (updatePassword.changedRows == 0) {
+        //                 ctx.body = ({
+        //                     status: 0,
+        //                     message: '原密码和修改密码相同！'
+        //                 })
+        //             } else {
+        //                 ctx.body = ({
+        //                     status: 0,
+        //                     message: '修改密码失败！'
+        //                 })
+        //             }
+        //         } else {
+        //             ctx.body = ({
+        //                 status: 0,
+        //                 message: '原密码不正确！'
+        //             })
+        //         }
+        //     } catch (err) {
+        //         ctx.body = ({
+        //             status: 0,
+        //             message: '修改失败'
+        //         })
+        //     }
+        // }
+        
     }
 }
 

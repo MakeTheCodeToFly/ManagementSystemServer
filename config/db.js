@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const mysqlConnection = new Sequelize('mydatabase', 'root', 'w12345', {
+const mysqlConnection = new Sequelize('mydatabase', 'root', '111111', {
   host: 'localhost',
   dialect: 'mysql',
   port: 3306,
