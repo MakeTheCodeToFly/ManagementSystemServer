@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 const userController = require('../controllers/user')
+const clueTableController = require('../controllers/clueTable')
 
 router.get('/json', async (ctx, next) => {
   // 查询数据
@@ -23,6 +24,9 @@ connect.query(sqlQuery, function(err, res) {
 router.post('/api/user/login', userController.login) // 用户登录接口
 router.post('/api/user/register', userController.create) // 用户注册
 router.post('/api/user/updatePassword', userController.updatePassword) // 用户注册
+
+// 线索表
+router.post('/api/clueTable/create', clueTableController.create) // 创建线索
 
 
 // 查询成功后关闭mysql
