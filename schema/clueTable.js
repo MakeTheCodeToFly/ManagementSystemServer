@@ -1,7 +1,7 @@
 const sequelize = require('sequelize')
 const moment = require('moment')
 const connectSequelize = require('../config/db')
-const User = connectSequelize.define('clue_table', {
+const clueTable = connectSequelize.define('clue_table', {
       clue_id: {
           type: sequelize.INTEGER,
           primaryKey: true,       //主键
@@ -22,7 +22,7 @@ const User = connectSequelize.define('clue_table', {
           defaultValue: ''
       },
       //线索地址
-      Clue_address: {
+      clue_address: {
           type: sequelize.STRING,
           allowNull: false,
           defaultValue: ''
@@ -61,10 +61,9 @@ const User = connectSequelize.define('clue_table', {
     createdAt: {
         type: sequelize.DATE,
         get() {
-            return moment(this.getDataValue('createdAt')).format('YYYY-MM-DD');
+            return moment(this.getDataValue('createAt')).format('YYYY-MM-DD');
         }
     },
-    // 线索更新时间
     updatedAt: {
         type: sequelize.DATE,
         get() {
@@ -73,5 +72,6 @@ const User = connectSequelize.define('clue_table', {
     }
   }, {
       freezeTableName: true
+      
   })
-  module.exports = User
+  module.exports = clueTable
