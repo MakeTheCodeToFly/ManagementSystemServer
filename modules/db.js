@@ -1,7 +1,7 @@
 let mysql = require('mysql')
 const db_config = {
   host: 'localhost',
-  password: 'w123456',
+  password: '111111',
   user: 'root',
   port: '3306',
   database: 'mydatabase'
