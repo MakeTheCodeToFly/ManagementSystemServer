@@ -80,6 +80,7 @@ const clueTable = connectSequelize.define('clue_table', {
     follow_record: {
         type: sequelize.INTEGER,
         allowNull: false,
+        
         defaultValue: '',
         comment: "在我的跟进中填写我的跟进记录" 
     },
