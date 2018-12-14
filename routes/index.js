@@ -26,9 +26,10 @@ router.post('/api/user/register', userController.create) // 用户注册
 router.post('/api/user/updatePassword', userController.updatePassword) // 用户注册
 
 // 线索表
-router.post('/api/clueTable/create', clueTableController.create) // 创建线索
+// router.post('/api/cluetable/create', clueTableController.create) // 创建线索
 
-
+// 订单创建
+router.post('/api/clueorder/create', clueTableController.createOrder)
 // 查询成功后关闭mysql
 // function closeMysql(connect) {
 //   connect.end((err) => {
