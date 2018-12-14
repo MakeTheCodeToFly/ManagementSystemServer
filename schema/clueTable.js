@@ -13,49 +13,76 @@ const clueTable = connectSequelize.define('clue_table', {
       clue_name: {
           type: sequelize.STRING,
           allowNull: false,
-          defaultValue: ''
+          defaultValue: '',
+          comment: "线索名字" 
       },
       //线索手机号
       clue_phone: {
           type: sequelize.STRING,
           allowNull: false,
-          defaultValue: ''
+          defaultValue: '',
+          comment: "线索手机号" 
       },
       //线索地址
       clue_address: {
           type: sequelize.STRING,
           allowNull: false,
-          defaultValue: ''
+          defaultValue: '',
+          comment: "线索地址" 
       },
       // 顾客购买意向
       customer_intention: {
         type: sequelize.INTEGER,
         allowNull: false,
-        defaultValue: ''
+        defaultValue: 3,
+        comment: "顾客购买意向" 
     },
     // 判定是否为我的跟进
     is_follow: {
         type: sequelize.STRING,
         allowNull: false,
-        defaultValue: ''
+        defaultValue: 3,
+        comment: "判定是否为我的跟进" 
     },
     // 关联用户userid
     relate_user_id: {
         type: sequelize.STRING,
         allowNull: false,
-        defaultValue: ''
+        defaultValue: '',
+        comment: "关联用户userid" 
     },
     // 是否再次跟进
     is_again_follow: {
         type: sequelize.STRING,
         allowNull: false,
-        defaultValue: ''
+        defaultValue: 3,
+        comment: "是否再次跟进" 
     },
     // 判定我的已完成订单
     is_finish: {
         type: sequelize.STRING,
         allowNull: false,
-        defaultValue: ''
+        defaultValue: 3,
+        comment: "判定我的已完成订单" 
+    },
+    purchase_commodity: {
+        type: sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: '',
+        comment: "在创建订单中购买商品" 
+    },
+    first_buy: {
+        type: sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: '',
+        comment: "在创建订单中是否首次购买" 
+    },
+    follow_record: {
+        type: sequelize.INTEGER,
+        allowNull: false,
+        
+        defaultValue: '',
+        comment: "在我的跟进中填写我的跟进记录" 
     },
     // 线索录入时间
     createdAt: {
