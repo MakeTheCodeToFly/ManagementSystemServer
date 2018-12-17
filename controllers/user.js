@@ -106,7 +106,7 @@ class userController {
         if (payload) {
             try {
                 const data = ctx.request.body
-                const isPassword = await userModel.isPassword(data) // 查询密码是否存在
+                const isPassword = await userModel.isPassword(data, payload.username) // 查询密码是否存在
                 if (isPassword.length != 0) {
                     const updatePassword  = await userModel.updatePassword(data)
                     if (updatePassword.changedRows == 1) {
