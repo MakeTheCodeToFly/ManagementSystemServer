@@ -14,7 +14,7 @@ class userModel {
     // 注册用户
     static create(data) {
         return new Promise((resolve, reject) => {
-            connect.query("insert into user (account, username, password, department) values ('" + data.account + "'," + data.username + "," + data.password + "," + data.department + ")", (err, res) => {
+            connect.query("insert into user (account, username, password, department) values ('" + data.account + "','" + data.username + "','" + data.password + "','" + data.department + "')", (err, res) => {
                 if (res) {
                     resolve(res)
                 } else {
@@ -39,7 +39,7 @@ class userModel {
     // 更改密码
     static updatePassword(data) {
         return new Promise((resolve, reject) => {
-            connect.query("update user set password = '" + data.newPassword +  "'where username = '" + data.username + "'", (err, res) => {
+            connect.query("update user set password = '" + data.newPassword +  "'where username = '" + data.username + "' and password = '" + data.password + "'", (err, res) => {
                 if (res) {
                     resolve(res)
                 } else {

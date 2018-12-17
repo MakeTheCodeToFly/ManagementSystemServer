@@ -101,49 +101,48 @@ class userController {
 
     // 修改密码
     static async updatePassword(ctx) {
-        const token = ctx.request.body
-        console.log(token)
-        let payload = await verify(token.token, 'secret')
-        console.log(payload)
-
-        // if (token) {
-        //     // let payload
-        //     try {
-        //         const data = ctx.request.body
-        //         const isPassword = await userModel.isPassword(data) // 查询密码是否存在
-        //         if (isPassword.length != 0) {
-        //             const updatePassword  = await userModel.updatePassword(data)
-        //             console.log(updatePassword.changedRows)
-        //             if (updatePassword.changedRows == 1) {
-        //                 ctx.body = ({
-        //                     status: 1,
-        //                     message: '修改密码成功！'
-        //                 })
-        //             } else if (updatePassword.changedRows == 0) {
-        //                 ctx.body = ({
-        //                     status: 0,
-        //                     message: '原密码和修改密码相同！'
-        //                 })
-        //             } else {
-        //                 ctx.body = ({
-        //                     status: 0,
-        //                     message: '修改密码失败！'
-        //                 })
-        //             }
-        //         } else {
-        //             ctx.body = ({
-        //                 status: 0,
-        //                 message: '原密码不正确！'
-        //             })
-        //         }
-        //     } catch (err) {
-        //         ctx.body = ({
-        //             status: 0,
-        //             message: '修改失败'
-        //         })
-        //     }
-        // }
-        
+        const data = ctx.request.body
+        let payload = await verify(data.token, 'secret')
+        if (payload) {
+            try {
+                const data = ctx.request.body
+                const isPassword = await userModel.isPassword(data) // 查询密码是否存在
+                if (isPassword.length != 0) {
+                    const updatePassword  = await userModel.updatePassword(data)
+                    if (updatePassword.changedRows == 1) {
+                        ctx.body = ({
+                            status: 1,
+                            message: '修改密码成功！'
+                        })
+                    } else if (updatePassword.changedRows == 0) {
+                        ctx.body = ({
+                            status: 0,
+                            message: '原密码和修改密码相同！'
+                        })
+                    } else {
+                        ctx.body = ({
+                            status: 0,
+                            message: '修改密码失败！'
+                        })
+                    }
+                } else {
+                    ctx.body = ({
+                        status: 0,
+                        message: '原密码不正确！'
+                    })
+                }
+            } catch (err) {
+                ctx.body = ({
+                    status: 0,
+                    message: '修改失败'
+                })
+            }
+        } else {
+            ctx.body =  ({
+                status: 403,
+                message: '请先登录~'
+            })
+        }
     }
 }
 

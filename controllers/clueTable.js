@@ -1,8 +1,35 @@
 const clueTableModel = require('../modules/clueTable')
+const jwt = require('jsonwebtoken')
 const util = require('util')
-// const verify = util.promisify(jwt.verify)
+const verify = util.promisify(jwt.verify)
 
 class clueTableController {
+    static async listOrder(ctx) {
+        let id = ctx.params.id
+        let token = ctx.params.token
+        let payload = await verify(token, 'secret')
+        if (payload) {
+            let listData = await clueTableModel.listOrder(id)
+            if (listData.dataValues) {
+                ctx.body = ({
+                    status: 1,
+                    result:listData.dataValues,
+                    message: 'ok'
+                })
+            } else {
+                ctx.body = ({
+                    status: 0,
+                    message: '数据获取失败~'
+                })
+            }
+        } else {
+            ctx.body = ({
+                status: 403,
+                message: '请先登录~'
+            })
+        }
+    }
+
     static async createOrder(ctx) {
         // const token = ctx.request.body
         // let payload = await verify(token.token, 'secret')
@@ -24,10 +51,38 @@ class clueTableController {
             })
         }
     }
-    
-    static async editOrder(ctx) {
-        let body = ctx.request.body
+
+    static async detailOrder(ctx) {
         let id = ctx.params.id
+        let detailData = await clueTableModel.detailOrder(id)
+        if (detailData.dataValues) {
+            ctx.body = ({
+                status: 1,
+                result: detailData.dataValues,
+                message: 'ok~'
+            })
+        } else {
+            ctx.body = ({
+                status: 0,
+                message: 'error~'
+            })
+        }
+    }
+    
+    static async updateOrder(ctx) {
+        let body = ctx.request.body
+        let updateData = await clueTableModel.updateOrder(body)
+        if (updateData.length >= 1) {
+            ctx.body = ({
+                status: 1,
+                message: '保存成功~'
+            })
+        } else {
+            ctx.body = ({
+                status: 0,
+                message: '保存失败~'
+            })
+        }
     }
 }
 

@@ -23,13 +23,17 @@ connect.query(sqlQuery, function(err, res) {
 // 用户接口
 router.post('/api/user/login', userController.login) // 用户登录接口
 router.post('/api/user/register', userController.create) // 用户注册
-router.post('/api/user/updatePassword', userController.updatePassword) // 用户注册
+router.post('/api/user/updatepassword', userController.updatePassword) // 用户修改密码
 
 // 线索表
 // router.post('/api/cluetable/create', clueTableController.create) // 创建线索
 
-// 订单创建
-router.post('/api/clueorder/create', clueTableController.createOrder)
+// 订单
+router.post('/api/clueorder/finish/list/:id?:token', clueTableController.listOrder) // 获取订单列表
+router.post('/api/clueorder/finish/create', clueTableController.createOrder) // 创建订单
+router.get('/api/clueorder/finish/detail/:id', clueTableController.detailOrder) // 获取订单详细信息
+router.post('/api/clueorder/finish/update', clueTableController.updateOrder) // 编辑保存成功
+
 // 查询成功后关闭mysql
 // function closeMysql(connect) {
 //   connect.end((err) => {

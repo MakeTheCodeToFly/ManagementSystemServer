@@ -2,6 +2,20 @@ const clueTable = require('../schema/clueTable')
 clueTable.sync({force: false})
 
 class clueTableModel {
+    static listOrder(id) {
+        let data = clueTable.findAndCountAll({
+            where: {
+                relate_user_id: id
+            },
+            limit: pageSize,
+            offset: (currentPage - 1) * pageSize
+        })
+        return {
+            data: data.rows,
+            totalCount: data.count
+        }
+    }
+
     static createOrder(data) {
         return clueTable.create({
             clue_name: data.clue_name, // 姓名
@@ -17,9 +31,26 @@ class clueTableModel {
             buy_goods: data.buy_goods // 购买商品
         })
     } 
-    static editOrder(data) {
-        return clueTable.update({
 
+    static detailOrder(id) {
+        return clueTable.findOne({
+                    where: {
+                        clue_id: id
+                    }
+                })
+    }
+    static updateOrder(data) {
+        return clueTable.update({
+            clue_name: data.clue_name,
+            clue_phone: data.clue_phone,
+            clue_address: data.clue_address,
+            first_buy: data.first_buy,
+            purchase_commodity: data.purchase_commodity,
+            buy_goods: data.buy_goods
+        }, {
+            where: {
+                clue_id: data.id
+            }
         })
     }
 }
