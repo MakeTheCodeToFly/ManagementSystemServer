@@ -1,14 +1,7 @@
 const clueTableModel = require('../modules/clueTable')
 const jwt = require('jsonwebtoken')
 const util = require('util')
-<<<<<<< HEAD
-const jwt = require('jsonwebtoken');
 const verify = util.promisify(jwt.verify)
-
-// const verify = util.promisify(jwt.verify)
-=======
-const verify = util.promisify(jwt.verify)
->>>>>>> b3947eebdb66ff1683c004be4bfac0126199c910
 
 class clueTableController {
     static async listOrder(ctx) {
@@ -20,7 +13,7 @@ class clueTableController {
             if (listData.dataValues) {
                 ctx.body = ({
                     status: 1,
-                    result:listData.dataValues,
+                    result: listData.dataValues,
                     message: 'ok'
                 })
             } else {
@@ -57,27 +50,6 @@ class clueTableController {
                 message: '创建失败！'
             })
         }
-        console.log("前端数据" + data)
-        let token = data.token
-        if (token) {
-            // 解密payload，获取用户名和ID
-            payload = await verify(token.split(' ')[1])
-
-            const user = {
-                id: payload.id,
-                username: payload.username,
-            }
-            console.log(user)
-            // const user = await clueTableModel.findClueByPhone()
-
-            let createClueTable = await clueTableModel.create(data)
-
-        } else {
-            ctx.body = ({
-                status: 0,
-                message: '新建失败！'
-            })
-        }
     }
 
     static async detailOrder(ctx) {
@@ -96,19 +68,45 @@ class clueTableController {
             })
         }
     }
-    
+
     static async updateOrder(ctx) {
         let body = ctx.request.body
-        let updateData = await clueTableModel.updateOrder(body)
-        if (updateData.length >= 1) {
+        let token = data.token
+        if (token) {
+            payload = await verify(token.split(' ')[1])
+            console.log(payload)
+            // if (updateData.length >= 1) {
+            //     let updateData = await clueTableModel.updateOrder(body)
+            //     ctx.body = ({
+            //         status: 1,
+            //         message: '保存成功~'
+            //     })
+            // } else {
+            //     ctx.body = ({
+            //         status: 0,
+            //         message: '保存失败~'
+            //     })
+            // }
+        }
+        
+    }
+
+    // 线索
+    // 创建线索
+    static async createClue(ctx) {
+        let data = ctx.request.body
+        let createData = await clueTableModel.createClue(data)
+        console.log("前端传递进来的数据")
+        console.log(createData)
+        if (createData.dataValues) {
             ctx.body = ({
                 status: 1,
-                message: '保存成功~'
+                message: '创建成功！'
             })
         } else {
             ctx.body = ({
                 status: 0,
-                message: '保存失败~'
+                message: '创建失败！'
             })
         }
     }
