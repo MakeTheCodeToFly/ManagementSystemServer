@@ -29,9 +29,9 @@ router.post('/api/user/updatepassword', userController.updatePassword) // 用户
 // router.post('/api/cluetable/create', clueTableController.create) // 创建线索
 
 // 订单
-router.post('/api/clueorder/finish/list/:id?:token', clueTableController.listOrder) // 获取订单列表
+router.post('/api/clueorder/finish/list', clueTableController.listOrder) // 获取订单列表
 router.post('/api/clueorder/finish/create', clueTableController.createOrder) // 创建订单
-router.get('/api/clueorder/finish/detail/:id', clueTableController.detailOrder) // 获取订单详细信息
+router.get('/api/clueorder/finish/detail/:id?:token', clueTableController.detailOrder) // 获取订单详细信息
 router.post('/api/clueorder/finish/update', clueTableController.updateOrder) // 编辑保存成功
 
 // 线索

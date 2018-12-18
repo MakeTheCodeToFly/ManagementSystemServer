@@ -5,29 +5,28 @@ const verify = util.promisify(jwt.verify)
 
 class clueTableController {
     static async listOrder(ctx) {
-        let id = ctx.params.id
-        let token = ctx.params.token
-        let payload = await verify(token, 'secret')
-        if (payload) {
-            let listData = await clueTableModel.listOrder(id)
-            if (listData.dataValues) {
-                ctx.body = ({
-                    status: 1,
-                    result: listData.dataValues,
-                    message: 'ok'
-                })
-            } else {
-                ctx.body = ({
-                    status: 0,
-                    message: '数据获取失败~'
-                })
-            }
-        } else {
-            ctx.body = ({
-                status: 403,
-                message: '请先登录~'
-            })
-        }
+        let data = ctx.request.body
+        let payload = await verify(data.token, 'secret')
+        let listData = await clueTableModel.listOrder(data, payload.id)
+        // if (payload) {
+        //     if (listData.dataValues) {
+        //         ctx.body = ({
+        //             status: 1,
+        //             result:listData.dataValues,
+        //             message: 'ok'
+        //         })
+        //     } else {
+        //         ctx.body = ({
+        //             status: 0,
+        //             message: '数据获取失败~'
+        //         })
+        //     }
+        // } else {
+        //     ctx.body = ({
+        //         status: 403,
+        //         message: '请先登录~'
+        //     })
+        // }
     }
 
     static async createOrder(ctx) {

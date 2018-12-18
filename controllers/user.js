@@ -29,7 +29,14 @@ class userController {
             if (a.length == 1) {
                 a.forEach((item, index, arr) => {
                     if (item.password == data.password) {
-                        const token = jwt.sign(data, 'secret', {expiresIn: '1h'})
+                        let obj = {
+                            id: item.userid,
+                            username: item.username,
+                            password: item.password
+                        }
+                        const token = jwt.sign(obj, 'secret', {
+                            expiresIn: '1h'
+                        })
                         ctx.body = ({
                             status: 1,
                             account: item.account,
@@ -105,19 +112,14 @@ class userController {
         let payload = await verify(data.token, 'secret')
         if (payload) {
             try {
-                const data = ctx.request.body
-                const isPassword = await userModel.isPassword(data, payload.username) // 查询密码是否存在
-                if (isPassword.length != 0) {
-                    const updatePassword  = await userModel.updatePassword(data)
+                let isPassword = await userModel.isPassword(data) // 查询密码是否存在
+                if (isPassword) {
+                    const updatePassword  = userModel.updatePassword(data)
+                    console.log(updatePassword)
                     if (updatePassword.changedRows == 1) {
                         ctx.body = ({
                             status: 1,
                             message: '修改密码成功！'
-                        })
-                    } else if (updatePassword.changedRows == 0) {
-                        ctx.body = ({
-                            status: 0,
-                            message: '原密码和修改密码相同！'
                         })
                     } else {
                         ctx.body = ({

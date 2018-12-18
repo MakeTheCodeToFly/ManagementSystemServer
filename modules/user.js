@@ -6,7 +6,7 @@ class userModel {
     // 用户登录
     static login() {
         return new Promise((res, rej) => {
-            connect.query("select username, password, account, department from user", (err, data) => {
+            connect.query("select username, password, account, department, userid from user", (err, data) => {
                 res(data)
             })
         })
@@ -26,7 +26,7 @@ class userModel {
     // 查询密码是否存在
     static isPassword(data) {
         return new Promise((resolve, reject) => {
-            connect.query("select * from user where password = '" + data.password + "'", (err, res) => {
+            connect.query("select * from user where password = '" + data.password + "' and username='"+ data.username +"'", (err, res) => {
                 if (res.length != 0) {
                     resolve(res)
                 } else {
@@ -37,9 +37,9 @@ class userModel {
     }
 
     // 更改密码
-    static updatePassword(data, username) {
+    static updatePassword(data) {
         return new Promise((resolve, reject) => {
-            connect.query("update user set password = '" + data.newPassword +  "'where username = '" + username + "' and password = '" + data.password + "'", (err, res) => {
+            connect.query("update user set password = '" + data.newpassword +  "'where username = '" + data.username + "'", (err, res) => {
                 if (res) {
                     resolve(res)
                 } else {
