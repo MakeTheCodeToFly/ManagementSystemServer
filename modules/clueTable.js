@@ -57,9 +57,9 @@ class clueTableModel {
     }
     // 线索
     // 创建线索
-    static createClue(data) {
+    static async createClue(data) {
         return clueTable.create({
-            relate_user_id: 1, // 判断用户id
+            relate_user_id: data.id, // 判断用户id
             clue_name: data.clue_name, // 姓名
             clue_phone: data.clue_phone, // 电话
             clue_address: data.clue_address, // 地址
