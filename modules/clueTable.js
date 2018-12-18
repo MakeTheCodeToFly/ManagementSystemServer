@@ -55,6 +55,18 @@ class clueTableModel {
             }
         })
     }
+    // 线索
+    // 创建线索
+    static createClue(data) {
+        return clueTable.create({
+            relate_user_id: 1, // 判断用户id
+            clue_name: data.clue_name, // 姓名
+            clue_phone: data.clue_phone, // 电话
+            clue_address: data.clue_address, // 地址
+            customer_intention: data.customer_intention, // 客户购买意向
+            is_again_follow: data.is_again_follow  // 是否愿意再次跟进 在创建订单时定义为3字段填充
+        })
+    } 
 }
 
 module.exports = clueTableModel

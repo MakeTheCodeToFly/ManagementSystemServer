@@ -34,6 +34,21 @@ router.post('/api/clueorder/finish/create', clueTableController.createOrder) // 
 router.get('/api/clueorder/finish/detail/:id?:token', clueTableController.detailOrder) // 获取订单详细信息
 router.post('/api/clueorder/finish/update', clueTableController.updateOrder) // 编辑保存成功
 
+// 线索
+// 新建线索
+router.post('/api/clue/list/create', clueTableController.createClue) // 创建线索
+
+// 线索列表
+// 线索详情
+// 编辑线索
+
+
+// 跟进
+// 新建跟进
+// 线索跟进
+// 线索跟进
+// 编辑跟进
+
 // 查询成功后关闭mysql
 // function closeMysql(connect) {
 //   connect.end((err) => {

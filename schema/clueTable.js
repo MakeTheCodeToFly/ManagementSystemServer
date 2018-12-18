@@ -68,13 +68,13 @@ const clueTable = connectSequelize.define('clue_table', {
     purchase_commodity: {
         type: sequelize.INTEGER,
         allowNull: false,
-        defaultValue: '',
+        defaultValue: 0,
         comment: "在创建订单中购买商品" 
     },
     first_buy: {
         type: sequelize.INTEGER,
         allowNull: false,
-        defaultValue: '',
+        defaultValue: 0,
         comment: "在创建订单中是否首次购买" 
     },
     follow_record: {

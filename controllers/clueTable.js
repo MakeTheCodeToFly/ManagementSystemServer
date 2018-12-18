@@ -67,19 +67,45 @@ class clueTableController {
             })
         }
     }
-    
+
     static async updateOrder(ctx) {
         let body = ctx.request.body
-        let updateData = await clueTableModel.updateOrder(body)
-        if (updateData.length >= 1) {
+        let token = data.token
+        if (token) {
+            payload = await verify(token.split(' ')[1])
+            console.log(payload)
+            // if (updateData.length >= 1) {
+            //     let updateData = await clueTableModel.updateOrder(body)
+            //     ctx.body = ({
+            //         status: 1,
+            //         message: '保存成功~'
+            //     })
+            // } else {
+            //     ctx.body = ({
+            //         status: 0,
+            //         message: '保存失败~'
+            //     })
+            // }
+        }
+        
+    }
+
+    // 线索
+    // 创建线索
+    static async createClue(ctx) {
+        let data = ctx.request.body
+        let createData = await clueTableModel.createClue(data)
+        console.log("前端传递进来的数据")
+        console.log(createData)
+        if (createData.dataValues) {
             ctx.body = ({
                 status: 1,
-                message: '保存成功~'
+                message: '创建成功！'
             })
         } else {
             ctx.body = ({
                 status: 0,
-                message: '保存失败~'
+                message: '创建失败！'
             })
         }
     }
