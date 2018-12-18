@@ -2,18 +2,20 @@ const clueTable = require('../schema/clueTable')
 clueTable.sync({force: false})
 
 class clueTableModel {
-    static listOrder(id) {
-        let data = clueTable.findAndCountAll({
+    static listOrder(data, id) {
+        let ref = clueTable.findAndCountAll({
             where: {
                 relate_user_id: id
             },
-            limit: pageSize,
-            offset: (currentPage - 1) * pageSize
+            limit: data.pageSize,
+            offset: (data.currentPage - 1) * data.pageSize,
+            distinct: true
+        }).then(res => {
+            console.log(res.rows)
+            console.log(res.count)
         })
-        return {
-            data: data.rows,
-            totalCount: data.count
-        }
+            // data: ref.rows,
+            // totalCount: ref.count
     }
 
     static createOrder(data) {
