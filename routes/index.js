@@ -39,13 +39,17 @@ router.post('/api/clueorder/finish/update', clueTableController.updateOrder) // 
 router.post('/api/clue/list/create', clueTableController.createClue) // 创建线索
 
 // 线索列表
+router.post('/api/clue/list', clueTableController.clueList) 
 // 线索详情
 // 编辑线索
 
 
 // 跟进
 // 新建跟进
-// 线索跟进
+router.post('/api/follow/list/create', clueTableController.createFollow) 
+// 线索跟进列表
+router.post('/api/follow/list', clueTableController.followList) 
+
 // 线索跟进
 // 编辑跟进
 
