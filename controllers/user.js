@@ -34,9 +34,7 @@ class userController {
                             username: item.username,
                             password: item.password
                         }
-                        const token = jwt.sign(obj, 'secret', {
-                            expiresIn: '1h'
-                        })
+                        const token = jwt.sign(obj, 'secret')
                         ctx.body = ({
                             status: 1,
                             account: item.account,
