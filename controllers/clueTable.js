@@ -90,25 +90,11 @@ class clueTableController {
         
     }
 
-    // 线索
-    // 创建线索
-    // static async createClue(ctx) {
-    //     let data = ctx.request.body
-    //     let createData = await clueTableModel.createClue(data)
-    //     if (createData.dataValues) {
-    //         ctx.body = ({
-    //             status: 1,
-    //             message: '创建成功！'
-    //         })
-    //     } else {
-    //         ctx.body = ({
-    //             status: 0,
-    //             message: '创建失败！'
-    //         })
-    //     }
-    // }
-    // 线索
-    // 创建线索
+  /**
+   * 
+   * @param {创建线索} ctx 
+   * 
+   */
     static async createClue(ctx) {
         let data = ctx.request.body
         const token = data.token
@@ -127,6 +113,37 @@ class clueTableController {
                         message: '创建失败！'
                     })
                 }
+        } else { //  1、时间失效的时候 2、 伪造的token  
+            ctx.body = ({
+                status: 0,
+                message: '无效token！'
+            })
+        }
+    }
+    /**
+     * 
+     * @param {线索列表} ctx 
+     */
+    static async clueList(ctx) {
+        let data = ctx.request.body
+        const token = data.token
+        let payload = await jwt.verify(token, 'secret')
+        if (token && payload) {
+            // data.is_follow = data.is_follow ? data.is_follow :  0
+            // data.clue_name = data.clue_name ? data.clue_name : ""
+            let listData = await clueTableModel.clueList(data)
+            if (listData) {
+                ctx.body = ({
+                    result: listData,
+                    status: 1,
+                    message: '成功！'
+                })
+            } else {
+                ctx.body = ({
+                    status: 0,
+                    message: '失败！'
+                })
+            }
         } else { //  1、时间失效的时候 2、 伪造的token  
             ctx.body = ({
                 status: 0,
