@@ -9,7 +9,7 @@ class clueTableModel {
             },
             limit: data.pageSize,
             offset: (data.currentPage - 1) * data.pageSize,
-            distinct: true
+            distinct: true // 去重
         }).then(res => {
             console.log(res.rows)
             console.log(res.count)
@@ -56,17 +56,59 @@ class clueTableModel {
         })
     }
     // 线索
-    // 创建线索
-    static createClue(data) {
+
+    /**
+     * 
+     * @param { 创建线索} data
+     */
+    static async createClue(data) {
         return clueTable.create({
-            relate_user_id: 1, // 判断用户id
+            relate_user_id: data.id, // 判断用户id
             clue_name: data.clue_name, // 姓名
             clue_phone: data.clue_phone, // 电话
             clue_address: data.clue_address, // 地址
             customer_intention: data.customer_intention, // 客户购买意向
             is_again_follow: data.is_again_follow  // 是否愿意再次跟进 在创建订单时定义为3字段填充
         })
-    } 
+    }
+    
+    // 线索列表
+         /**
+     * 
+     * @param {线索列表} ctx 
+     * is_follow 线索状态
+     * clue_name 用户名
+     * limit 数量
+     * page 页数
+     */
+    static async clueList(params) {
+        let ret = null;
+        let { page = 1, clue_name, is_follow } = params;
+        ret = await clueTable.findAndCountAll({
+            limit: 10,//每页10条
+            offset: (page - 1) * 10,
+            where: {
+                clue_name
+            },
+            'order': [
+                ['clue_id', 'DESC']
+            ],
+            attributes: { exclude: ['content'] }
+        })
+        return {
+            code: 200,
+            data: ret.rows,
+            meta: {
+                current_page: parseInt(page),
+                per_page: 10,
+                count: ret.count,
+                total: ret.count,
+                total_pages: Math.ceil(ret.count / 10),
+            }
+        }
+    }
+
+
 }
 
 module.exports = clueTableModel

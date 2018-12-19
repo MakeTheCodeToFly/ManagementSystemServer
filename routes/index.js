@@ -39,6 +39,7 @@ router.post('/api/clueorder/finish/update', clueTableController.updateOrder) // 
 router.post('/api/clue/list/create', clueTableController.createClue) // 创建线索
 
 // 线索列表
+router.post('/api/clue/list', clueTableController.clueList) 
 // 线索详情
 // 编辑线索
 
