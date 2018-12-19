@@ -151,6 +151,70 @@ class clueTableController {
             })
         }
     }
+
+    /**
+   * 
+   * @param {新建跟进} ctx 
+   * 
+   */
+    static async createFollow(ctx) {
+        let data = ctx.request.body
+        const token = data.token
+        let payload = await jwt.verify(token, 'secret')
+        if (token && payload) {
+            data.id = payload.id
+            console.log(payload)
+            let followData = await clueTableModel.createFollow(data)
+            if (followData.dataValues) {
+                ctx.body = ({
+                    status: 1,
+                    message: '创建成功！'
+                })
+            } else {
+                ctx.body = ({
+                    status: 0,
+                    message: '创建失败！'
+                })
+            }
+        } else { //  1、时间失效的时候 2、 伪造的token  
+            ctx.body = ({
+                status: 0,
+                message: '无效token！'
+            })
+        }
+    }
+
+    /**
+     * 
+     * @param {我的跟进列表} ctx 
+     */
+    static async followList(ctx) {
+        let data = ctx.request.body
+        const token = data.token
+        let payload = await jwt.verify(token, 'secret')
+        if (token && payload) {
+            // data.is_follow = data.is_follow ? data.is_follow :  0
+            // data.clue_name = data.clue_name ? data.clue_name : ""
+            let listData = await clueTableModel.followList(data)
+            if (listData) {
+                ctx.body = ({
+                    result: listData,
+                    status: 1,
+                    message: '成功！'
+                })
+            } else {
+                ctx.body = ({
+                    status: 0,
+                    message: '失败！'
+                })
+            }
+        } else { //  1、时间失效的时候 2、 伪造的token  
+            ctx.body = ({
+                status: 0,
+                message: '无效token！'
+            })
+        }
+    }
 }
 
 module.exports = clueTableController
