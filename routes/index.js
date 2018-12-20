@@ -37,12 +37,12 @@ router.post('/api/clueorder/finish/update', clueTableController.updateOrder) // 
 // 线索
 // 新建线索
 router.post('/api/clue/list/create', clueTableController.createClue) // 创建线索
-
 // 线索列表
 router.post('/api/clue/list', clueTableController.clueList) 
 // 线索详情
+router.post('/api/clue/detail', clueTableController.detailsClue)
 // 编辑线索
-
+router.post('/api/clue/update', clueTableController.updateClue)
 
 // 跟进
 // 新建跟进
@@ -50,8 +50,11 @@ router.post('/api/follow/list/create', clueTableController.createFollow)
 // 线索跟进列表
 router.post('/api/follow/list', clueTableController.followList) 
 
-// 线索跟进
+// 跟进详情
+router.get('/api/follow/detail/:clue_id?/:token', clueTableController.detailsFollow)
 // 编辑跟进
+router.post('/api/follow/update', clueTableController.updateFollow)
+
 
 // 查询成功后关闭mysql
 // function closeMysql(connect) {
