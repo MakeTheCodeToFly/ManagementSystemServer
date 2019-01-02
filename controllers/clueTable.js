@@ -181,6 +181,35 @@ class clueTableController {
     }
     /**
      * 
+     * 放弃线索
+     */
+    static async giveUpClue(ctx) {
+        let data = ctx.request.body
+        const token = data.token
+        let paylaod = await jwt.verify(token, 'secret')
+        if (token && paylaod) {
+            let clueDate = await clueTableModel.giveUpClue(data)
+            if (clueDate) {
+                ctx.body = {
+                    status: 1,
+                    message: "success"
+                }
+            } else {
+                ctx.body = {
+                    status: 0,
+                    message: "参数错误"
+                }
+            }
+
+        } else {
+            ctx.body = {
+                status: 0,
+                message: "token无效"
+            }
+        }
+    }
+    /**
+     * 
      * @param {线索列表} ctx 
      */
     static async clueList(ctx) {

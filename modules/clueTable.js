@@ -105,6 +105,20 @@ class clueTableModel {
             }
         })
     }
+
+    /**
+     * 
+     * @param {放弃线索} data 
+     */
+    static async giveUpClue(data) {
+        return await clueTable.update({
+            is_give_up: 2
+        }, {
+            where: {
+                clue_id: data.clue_id
+            }
+        })
+    }
     // 线索列表
     /**
      * 
@@ -119,7 +133,7 @@ class clueTableModel {
         let {
             page = 1, limit = DEFAULT_LIMIT, clue_name, is_follow
         } = params;
-        let where = {}
+        let where = {is_give_up: 1}
         if (params.clue_name) {
             where.clue_name = params.clue_name
         } else if (params.is_follow) {

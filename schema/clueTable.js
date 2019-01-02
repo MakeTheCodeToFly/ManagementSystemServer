@@ -31,6 +31,16 @@ const clueTable = connectSequelize.define('clue_table', {
           comment: "线索地址" 
       },
       /**
+       * 1，不放弃
+       * 2，放弃
+       */
+      is_give_up: {
+          type: sequelize.INTEGER,
+          defaultValue: 1,
+          allowNull: false,
+          comment: '是否放弃'
+      },
+      /**
        * 1:男
        * 2:女
        */
