@@ -30,7 +30,22 @@ const clueTable = connectSequelize.define('clue_table', {
           defaultValue: '',
           comment: "线索地址" 
       },
+      /**
+       * 1:男
+       * 2:女
+       */
+      sex: {
+          type: sequelize.INTEGER,
+          allowNull:false,
+          defaultValue: 1,
+          comment:'线索性别'
+      },
       // 顾客购买意向
+    /**
+     * 1: 购买意向强烈
+     * 2: 有购买意向，但是不强烈
+     * 3: 缺乏意向，急需沟通
+     */
       customer_intention: {
         type: sequelize.INTEGER,
         allowNull: false,
@@ -42,7 +57,7 @@ const clueTable = connectSequelize.define('clue_table', {
         type: sequelize.STRING,
         allowNull: false,
         defaultValue: 3,
-        comment: "判定是否为我的跟进" 
+        comment: "判定是否为我的跟进，" 
     },
     // 关联用户userid
     relate_user_id: {
@@ -52,6 +67,9 @@ const clueTable = connectSequelize.define('clue_table', {
         comment: "关联用户userid" 
     },
     // 是否再次跟进
+    /**
+     * 1，是，2：否
+     */
     is_again_follow: {
         type: sequelize.STRING,
         allowNull: false,
