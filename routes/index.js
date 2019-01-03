@@ -43,6 +43,8 @@ router.post('/api/clue/list', clueTableController.clueList)
 router.post('/api/clue/detail', clueTableController.detailsClue)
 // 编辑线索
 router.post('/api/clue/update', clueTableController.updateClue)
+// 放弃线索
+router.post('/api/clue/giveup', clueTableController.giveUpClue)
 
 // 跟进
 // 新建跟进

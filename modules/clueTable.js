@@ -4,39 +4,20 @@ clueTable.sync({
 })
 const DEFAULT_LIMIT = 10
 class clueTableModel {
-    static listOrder(params) {
-        let ret = null;
-        let {
-          page = 1, limit = DEFAULT_LIMIT, clue_name, is_follow
-        } = params;
-        let where = {}
-        if (params.clue_name) {
-          where.clue_name = params.clue_name
-        } else if (params.is_follow) {
-          where.is_follow = params.is_follow
-        }
-        ret = await clueTable.findAndCountAll({
-          limit,
-          offset: (page - 1) * limit,
-          where,
-          'order': [
-            ['clue_id', 'ASC']
-          ],
-          attributes: {
-            exclude: ['content']
-          }
+    static listOrder(data, id) {
+        let ref = clueTable.findAndCountAll({
+            where: {
+                relate_user_id: id
+            },
+            limit: data.pageSize,
+            offset: (data.currentPage - 1) * data.pageSize,
+            distinct: true // 去重
+        }).then(res => {
+            console.log(res.rows)
+            console.log(res.count)
         })
-        return {
-          code: 200,
-          data: ret.rows,
-          meta: {
-            current_page: parseInt(page),
-            per_page: 10,
-            count: ret.count,
-            total: ret.count,
-            total_pages: Math.ceil(ret.count / 10),
-          }
-        }
+        // data: ref.rows,
+        // totalCount: ref.count
     }
 
     static createOrder(data) {
@@ -82,7 +63,7 @@ class clueTableModel {
      * 
      * @param { 创建线索} data
      */
-    static async createClue(data) { 
+    static async createClue(data) {
         return clueTable.create({
             relate_user_id: data.id, // 判断用户id
             clue_name: data.clue_name, // 姓名
@@ -124,6 +105,20 @@ class clueTableModel {
             }
         })
     }
+
+    /**
+     * 
+     * @param {放弃线索} data 
+     */
+    static async giveUpClue(data) {
+        return await clueTable.update({
+            is_give_up: 2
+        }, {
+            where: {
+                clue_id: data.clue_id
+            }
+        })
+    }
     // 线索列表
     /**
      * 
@@ -138,7 +133,7 @@ class clueTableModel {
         let {
             page = 1, limit = DEFAULT_LIMIT, clue_name, is_follow
         } = params;
-        let where = {}
+        let where = {is_give_up: 1}
         if (params.clue_name) {
             where.clue_name = params.clue_name
         } else if (params.is_follow) {
