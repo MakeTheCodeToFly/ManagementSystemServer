@@ -179,6 +179,7 @@ class clueTableController {
             }
         }
     }
+    
     /**
      * 
      * 放弃线索
